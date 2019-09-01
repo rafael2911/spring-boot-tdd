@@ -8,6 +8,7 @@ import br.com.crcarvalho.catalogo.repository.PessoaRepository;
 import br.com.crcarvalho.catalogo.service.PessoaService;
 import br.com.crcarvalho.catalogo.service.exception.CpfDuplicadoException;
 import br.com.crcarvalho.catalogo.service.exception.TelefoneDuplicadoException;
+import br.com.crcarvalho.catalogo.service.exception.TelefoneNaoEncontradoException;
 
 public class PessoaServiceImpl implements PessoaService {
 
@@ -31,6 +32,12 @@ public class PessoaServiceImpl implements PessoaService {
 			throw new TelefoneDuplicadoException();
 		
 		return pessoaRepository.save(pessoa);
+	}
+
+	@Override
+	public Pessoa buscarPorTelefone(Telefone telefone) {	
+		Optional<Pessoa> optional = pessoaRepository.findByTelefoneDddAndTelefoneNumero(telefone.getDdd(), telefone.getNumero());
+		return optional.orElseThrow(() -> new TelefoneNaoEncontradoException());
 	}
 
 }
