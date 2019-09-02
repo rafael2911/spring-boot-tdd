@@ -45,5 +45,25 @@ public class PessoaRepositoryTest {
 
 		assertThat(optional.isPresent()).isFalse();
 	}
+	
+	@Test
+	public void deveEncontrarPessoaPeloDddENumeroDeTelefone() {
+		Optional<Pessoa> optional = pessoaRepository.findByTelefonesDddAndTelefonesNumero("86", "35006330");
+		
+		assertThat(optional.isPresent()).isTrue();
+
+		Pessoa pessoa = optional.get();
+
+		assertThat(pessoa.getId()).isEqualTo(3L);
+		assertThat(pessoa.getNome()).isEqualTo("Cauê");
+		assertThat(pessoa.getCpf()).isEqualTo("38767897100");
+	}
+	
+	@Test
+	public void naoDeveEncontrarPessoaPeloDddETelefoneInexistente() {
+		Optional<Pessoa> optional = pessoaRepository.findByTelefonesDddAndTelefonesNumero("11", "32812020");
+		
+		assertThat(optional.isPresent()).isFalse();
+	}
 
 }
