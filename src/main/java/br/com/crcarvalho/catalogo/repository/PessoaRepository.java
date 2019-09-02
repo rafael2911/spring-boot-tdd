@@ -10,6 +10,6 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
 	Optional<Pessoa> findByCpf(String cpf);
 
-	Optional<Pessoa> findByTelefoneDddAndTelefoneNumero(String ddd, String numero);
+	Optional<Pessoa> findByTelefonesDddAndTelefonesNumero(String ddd, String numero);
 
 }

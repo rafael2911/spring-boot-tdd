@@ -26,7 +26,7 @@ public class PessoaServiceImpl implements PessoaService {
 			throw new CpfDuplicadoException();
 		
 		Telefone telefone = pessoa.getTelefones().get(0);
-		optional = pessoaRepository.findByTelefoneDddAndTelefoneNumero(telefone.getDdd(), telefone.getNumero());
+		optional = pessoaRepository.findByTelefonesDddAndTelefonesNumero(telefone.getDdd(), telefone.getNumero());
 		
 		if(optional.isPresent())
 			throw new TelefoneDuplicadoException();
@@ -36,7 +36,7 @@ public class PessoaServiceImpl implements PessoaService {
 
 	@Override
 	public Pessoa buscarPorTelefone(Telefone telefone) {	
-		Optional<Pessoa> optional = pessoaRepository.findByTelefoneDddAndTelefoneNumero(telefone.getDdd(), telefone.getNumero());
+		Optional<Pessoa> optional = pessoaRepository.findByTelefonesDddAndTelefonesNumero(telefone.getDdd(), telefone.getNumero());
 		return optional.orElseThrow(() -> new TelefoneNaoEncontradoException());
 	}
 
