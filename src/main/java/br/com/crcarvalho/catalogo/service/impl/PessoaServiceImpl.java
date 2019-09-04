@@ -2,6 +2,8 @@ package br.com.crcarvalho.catalogo.service.impl;
 
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import br.com.crcarvalho.catalogo.model.Pessoa;
 import br.com.crcarvalho.catalogo.model.Telefone;
 import br.com.crcarvalho.catalogo.repository.PessoaRepository;
@@ -10,6 +12,7 @@ import br.com.crcarvalho.catalogo.service.exception.CpfDuplicadoException;
 import br.com.crcarvalho.catalogo.service.exception.TelefoneDuplicadoException;
 import br.com.crcarvalho.catalogo.service.exception.TelefoneNaoEncontradoException;
 
+@Service
 public class PessoaServiceImpl implements PessoaService {
 
 	private final PessoaRepository pessoaRepository;
