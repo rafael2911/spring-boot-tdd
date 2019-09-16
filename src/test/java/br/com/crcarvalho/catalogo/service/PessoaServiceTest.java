@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -31,6 +33,9 @@ public class PessoaServiceTest {
 
 	@MockBean
 	private PessoaRepository pessoaRepository;
+	
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
 	
 	private PessoaService pessoaService;
 	
@@ -82,6 +87,14 @@ public class PessoaServiceTest {
 	
 	@Test(expected = TelefoneNaoEncontradoException.class)
 	public void deveLancarTelefoneNaoEncontradoExceptionQuandoNaoExistirPessoaComODddENumero() {
+		pessoaService.buscarPorTelefone(telefone);
+	}
+	
+	@Test
+	public void deveRetornarDadosDoTelefoneDentroDaExecucaoDeTelefoneNaoEncontradoException() {
+		expectedException.expect(TelefoneNaoEncontradoException.class);
+		expectedException.expectMessage("Não existe pessoa com o telefone (" + DDD +") " + NUMERO);
+		
 		pessoaService.buscarPorTelefone(telefone);
 	}
 	

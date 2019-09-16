@@ -26,4 +26,16 @@ public class PessoaResourceTest extends SpringBootTddApplicationTests {
 					"cpf", equalTo("38767897100"));
 	}
 	
+	@Test
+	public void deveRetornarErroNaoEncontradoQuandoBuscarPessoaPorTelefoneInexistente() {
+		given()
+			.pathParam("ddd", "99")
+			.pathParam("numero", "35006330")
+		.get("/pessoas/{ddd}/{numero}")
+		.then()
+			.log().body().and()
+			.statusCode(HttpStatus.NOT_FOUND.value())
+			.body("erro", equalTo("Não existe pessoa com o telefone (99) 35006330"));
+	}
+	
 }

@@ -40,7 +40,7 @@ public class PessoaServiceImpl implements PessoaService {
 	@Override
 	public Pessoa buscarPorTelefone(Telefone telefone) {	
 		Optional<Pessoa> optional = pessoaRepository.findByTelefonesDddAndTelefonesNumero(telefone.getDdd(), telefone.getNumero());
-		return optional.orElseThrow(() -> new TelefoneNaoEncontradoException());
+		return optional.orElseThrow(() -> new TelefoneNaoEncontradoException("Não existe pessoa com o telefone (" + telefone.getDdd() +") " + telefone.getNumero()));
 	}
 
 }
