@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -54,7 +54,7 @@ public class PessoaServiceTest {
 		pessoa = new Pessoa();
 		pessoa.setNome(NOME);
 		pessoa.setCpf(CPF);
-		pessoa.setTelefones(new ArrayList<Telefone>(java.util.Arrays.asList(telefone)));
+		pessoa.setTelefones(Arrays.asList(telefone));
 		
 		when(pessoaRepository.findByCpf(CPF)).thenReturn(Optional.empty());
 		when(pessoaRepository.findByTelefonesDddAndTelefonesNumero(DDD, NUMERO)).thenReturn(Optional.empty());
