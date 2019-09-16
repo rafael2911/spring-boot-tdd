@@ -26,13 +26,13 @@ public class PessoaServiceImpl implements PessoaService {
 		Optional<Pessoa> optional = pessoaRepository.findByCpf(pessoa.getCpf());
 		
 		if(optional.isPresent())
-			throw new CpfDuplicadoException();
+			throw new CpfDuplicadoException("Já existe pessoa cadastrada com o CPF " + pessoa.getCpf());
 		
 		Telefone telefone = pessoa.getTelefones().get(0);
 		optional = pessoaRepository.findByTelefonesDddAndTelefonesNumero(telefone.getDdd(), telefone.getNumero());
 		
 		if(optional.isPresent())
-			throw new TelefoneDuplicadoException();
+			throw new TelefoneDuplicadoException("Já existe pessoa cadastrada com o telefone (" + telefone.getDdd() + ") " + telefone.getNumero());
 		
 		return pessoaRepository.save(pessoa);
 	}

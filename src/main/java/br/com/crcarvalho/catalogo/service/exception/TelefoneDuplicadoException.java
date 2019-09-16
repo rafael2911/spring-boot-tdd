@@ -4,4 +4,8 @@ public class TelefoneDuplicadoException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
+	public TelefoneDuplicadoException(String message) {
+		super(message);
+	}
+
 }

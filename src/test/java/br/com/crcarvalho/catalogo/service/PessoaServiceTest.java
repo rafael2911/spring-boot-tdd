@@ -69,18 +69,24 @@ public class PessoaServiceTest {
 		verify(pessoaRepository).save(pessoa);
 	}
 	
-	@Test(expected = CpfDuplicadoException.class)
+	@Test
 	public void naoDeveSalvarDuasPessoasComOMesmoCpf() {
 		// quando chamar o metodo findByCpf, retornar o optional com a pessoa jah cadastrada
 		when(pessoaRepository.findByCpf(CPF)).thenReturn(Optional.of(pessoa));
+		
+		expectedException.expect(CpfDuplicadoException.class);
+		expectedException.expectMessage("Já existe pessoa cadastrada com o CPF " + pessoa.getCpf());
 		
 		// deverá lancar uma exception pois a pessoa jah esta cadastrada
 		pessoaService.salvar(pessoa);
 	}
 	
-	@Test(expected = TelefoneDuplicadoException.class)
+	@Test
 	public void naoDeveSalvarDuasPessoasComOMesmoTelefone() {
 		when(pessoaRepository.findByTelefonesDddAndTelefonesNumero(DDD, NUMERO)).thenReturn(Optional.of(pessoa));
+		
+		expectedException.expect(TelefoneDuplicadoException.class);
+		expectedException.expectMessage("Já existe pessoa cadastrada com o telefone (" + DDD + ") " + NUMERO);
 		
 		pessoaService.salvar(pessoa);
 	}

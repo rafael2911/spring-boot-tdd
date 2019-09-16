@@ -76,4 +76,56 @@ public class PessoaResourceTest extends SpringBootTddApplicationTests {
 		
 	}
 	
+	@Test
+	public void naoDeveSalvarDuasPessoasComOMesmoCpf() {
+		final Pessoa pessoa = new Pessoa();
+		pessoa.setNome("Igor");
+		pessoa.setCpf("72788740417");
+		
+		final Telefone telefone = new Telefone();
+		telefone.setDdd("51");
+		telefone.setNumero("37030614");
+		
+		pessoa.setTelefones(Arrays.asList(telefone));
+		
+		given()
+			.request()
+			.header("Accept", ContentType.ANY)
+			.header("Content-type", ContentType.JSON)
+			.body(pessoa)
+		.when()
+		.post("/pessoas")
+		.then()
+				.log().body()
+			.and()
+				.statusCode(HttpStatus.BAD_REQUEST.value())
+				.body("erro", equalTo("Já existe pessoa cadastrada com o CPF 72788740417"));
+	}
+	
+	@Test
+	public void naoDeveSalvarDuasPessoasComOMesmoTelefone() {
+		final Pessoa pessoa = new Pessoa();
+		pessoa.setNome("Igor");
+		pessoa.setCpf("65124213884");
+		
+		final Telefone telefone = new Telefone();
+		telefone.setDdd("41");
+		telefone.setNumero("999570146");
+		
+		pessoa.setTelefones(Arrays.asList(telefone));
+		
+		given()
+			.request()
+			.header("Accept", ContentType.ANY)
+			.header("Content-type", ContentType.JSON)
+			.body(pessoa)
+		.when()
+		.post("/pessoas")
+		.then()
+				.log().body()
+			.and()
+				.statusCode(HttpStatus.BAD_REQUEST.value())
+				.body("erro", equalTo("Já existe pessoa cadastrada com o telefone (41) 999570146"));
+	}
+	
 }
