@@ -1,6 +1,7 @@
 package br.com.crcarvalho.catalogo.resource;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +18,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.crcarvalho.catalogo.model.Pessoa;
 import br.com.crcarvalho.catalogo.model.Telefone;
+import br.com.crcarvalho.catalogo.repository.PessoaRepository;
+import br.com.crcarvalho.catalogo.repository.filtro.PessoaFiltro;
 import br.com.crcarvalho.catalogo.service.PessoaService;
 
 @RestController
@@ -25,6 +28,9 @@ public class PessoaResource {
 	
 	@Autowired
 	private PessoaService pessoaService;
+	
+	@Autowired
+	private PessoaRepository pessoaRepository;
 	
 	@GetMapping("{ddd}/{numero}")
 	public ResponseEntity<Pessoa> buscarPorDddENumeroDoTelefone(@PathVariable("ddd") String ddd,
@@ -50,6 +56,12 @@ public class PessoaResource {
 		response.setHeader("Location", location.toASCIIString());
 		
 		return new ResponseEntity<>(pessoa, HttpStatus.CREATED);
+	}
+	
+	@PostMapping("filtrar")
+	public List<Pessoa> filtrar(@RequestBody PessoaFiltro filtro){
+		
+		return pessoaRepository.filtrar(filtro);
 	}
 	
 }
