@@ -139,13 +139,14 @@ public class PessoaResourceTest extends SpringBootTddApplicationTests {
 			.request()
 			.header("Accept", ContentType.ANY)
 			.header("Content-type", ContentType.JSON)
+			.body(filtro)
 		.when()
 		.post("/pessoas/filtrar")
 		.then()
 				.log().body()
 			.and()
 				.statusCode(HttpStatus.OK.value())
-				.body("codigo", containsInAnyOrder(1, 3, 5),
+				.body("id", containsInAnyOrder(1, 3, 5),
 						"nome", containsInAnyOrder("Thiago", "Iago", "Cauê"),
 						"cpf", containsInAnyOrder("86730543540", "72788740417", "38767897100"));
 	}
